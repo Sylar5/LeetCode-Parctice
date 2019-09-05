@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int threeSumMulti(vector<int>& A, int target) {
+        if(A.size() < 3)  return 0;
+        unordered_map<int, long> map;
+        for(auto i : A)  ++map[i];
+        long res = 0;
+        for(auto it : map) {
+            for(auto jt : map) {
+                int i = it.first, j = jt.first, k = target - i - j;
+                if(map.count(k)) {
+                    if(i == j && j != k)  
+                        res += map[i] * (map[i] - 1) * map[k] / 2;
+                    else if(i == j && j == k)  
+                        res += map[i] * (map[i] - 1) * (map[i] - 2) / 6;
+                    else if(i < j && j < k)
+                        res += map[i] * map[j] * map[k];
+                }
+            }
+        }
+        return res % (1000000007);
+    }
+};
